@@ -1,9 +1,3 @@
-class Node:
-    def __init__(self,state,children,value,is_max=True):
-        self.state=state
-        self.children=children
-        self.value=0
-        self.is_max=is_max
 
 
 
