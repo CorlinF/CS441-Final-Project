@@ -35,16 +35,15 @@ class Board:
             return False
         
         if piece.value ==1:
-            if x1-y1==1 and abs(x1-y1)==1:
+            if x1-y1==1 and abs(x2-y2)==1:
                 return True
         if piece.value ==-1:
-            if y1-x1==1 and abs(x1-y1)==1:
+            if y1-x1==1 and abs(x2-y2)==1:
                 return True
             
         if piece.value in [10,-10]:
-            if abs(x1-y1)==abs(x2-y2):
+            if abs(x1-y1)==1 and abs(x2-y2)==1:
                 return True
-            
 
 
             
