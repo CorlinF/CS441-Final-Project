@@ -55,7 +55,7 @@ class Board:
         actions=[]
         for (i,j) in product(range(8),range(8)):
             if self.state[i][j] != 0:
-                piece = Piece((i,j),self.state[i][j])
+                piece = self.Piece((i,j),self.state[i][j])
                 for (i1,j1) in product(range(i-2,i+3),range(j-2,j+3)):
                     if self.is_legal(piece,(i1,j1)):
                         actions += [(piece,(i1,j1))]
@@ -70,3 +70,19 @@ class Board:
 
         if abs(x1-y1) == 2:
             self.state[x1+(y1-x1)/2][x2+(y2-x2)/2] = 0
+
+    def is_final(self):
+        legal_moves = self.legal_moves()
+
+        if not legal_moves:
+            player1_pieces = sum(1 for row in self.state for piece in row if piece > 0)
+            player2_pieces = sum(1 for row in self.state for piece in row if piece < 0)
+        
+            if player1_pieces > 0 and player2_pieces == 0:
+                return True, 1  # Player 1 wins
+            elif player2_pieces > 0 and player1_pieces == 0:
+                return True, -1  # Player 2 wins
+            else:
+                return True, 0  # Draw 
+
+        return False, 0  # Game is not over
