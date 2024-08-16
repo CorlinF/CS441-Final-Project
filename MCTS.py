@@ -19,6 +19,7 @@ class McNode:
         while node.children != []:
             node = choice(node.children,weights=[child.value/child.visited+sqrt(log(node.visited)/(2*child.visited)) for child in node.children])
         return node
+    
 
     def rollout(self):
         self.visited += 1
@@ -38,7 +39,7 @@ class McNode:
             self.parent.backpropogate(winner)
 
     def expand(self):
-        self.children = [McNode(move,-team,self) for move in self.board.legal_moves()]
+        self.children = [McNode(move,-self.team,self) for move in self.board.legal_moves()]
 
 
 class MCTS:
