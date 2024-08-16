@@ -1,4 +1,5 @@
 from itertools import product
+from random import choice
 
 class Board:
     class Piece:
@@ -86,3 +87,13 @@ class Board:
                 return True, 0  # Draw 
 
         return False, 0  # Game is not over
+
+
+    def random_move(self,team): #team is +/- 1
+        while True:
+            x1,x2 = choice(range(8)),choice(range(8))
+            if self.state[x1][x2] in [team,10*team]:
+                piece = self.Piece((i,j),self.state[x1][x2])
+                y1,y2 = choice([x1-team,x1-2*team]),choice([x2+1,x2-1,x2+2,x2-2])
+                if is_legal(piece,(y1,y2)):
+                    return (piece,(y1,y2))
