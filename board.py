@@ -97,3 +97,12 @@ class Board:
                 y1,y2 = choice([x1+1,x1-1,x1+2,x1-2]),choice([x2+1,x2-1,x2+2,x2-2])
                 if is_legal(piece,(y1,y2)):
                     return (piece,(y1,y2))
+
+    def random_game(self,team):
+        finished,winning_team = self.is_final()
+        while not finished:
+            piece,position = self.random_move(team)
+            self.make_move(piece,position)
+            finished,winning_team = self.is_final()
+            team = -team
+        return winning_team
