@@ -21,17 +21,7 @@ class McNode:
             node = choice(node.children,weights=[child.value/child.visited+sqrt(log(node.visited)/(2*child.visited)) for child in node.children])
         return node
     
-
-    def rollout(self):
-        self.visited += 1
-        result = self.board.random_game(self.team)
-        if result == self.team:
-            self.value += 1
-        elif result == 0:
-            self.value += .5
-        return result
-    
-    def rollout2(self,num_rollout):
+    def rollout(self,num_rollout):
         total_value=0
         self.visited += 1
         for _ in range(num_rollout):
@@ -42,17 +32,8 @@ class McNode:
                 total_value += .5
         self.value=total_value/num_rollout
         return self.value
-
-    def backpropagate(self,winner):
-        self.visited += 1
-        if self.team == winner:
-            self.value += 1
-        elif winner == 0:
-            self.value += .5
-        if self.parent:
-            self.parent.backpropogate(winner)
     
-    def backpropagate2(self, value):
+    def backpropagate(self, value):
         self.visited += 1
         self.value += value 
         if self.parent:
@@ -74,13 +55,13 @@ class MCTS:
             while current.children:
                 current=current.select()
             if current.visited==0:
-                average_value = current.rollout2(times)
-                current.backpropagate2(average_value)
+                average_value = current.rollout(times)
+                current.backpropagate(average_value)
             else:
                 current.expand()
                 current = current.select()
-                average_value = current.rollout2(times)
-                current.backpropagate2(average_value)
+                average_value = current.rollout(times)
+                current.backpropagate(average_value)
         best_child = max(self.root.children, key=lambda c: c.visited)
         return best_child.board
     
