@@ -87,18 +87,8 @@ class Board:
                 return True, 0  # Draw 
 
         return False, 0  # Game is not over
-
-
-    def random_move(self,team): #team is +/- 1
-        while True:
-            x1,x2 = choice(range(8)),choice(range(8))
-            if self.state[x1][x2] in [team,10*team]:
-                piece = self.Piece((x1,x2),self.state[x1][x2])
-                y1,y2 = choice([x1+1,x1-1,x1+2,x1-2]),choice([x2+1,x2-1,x2+2,x2-2])
-                if self.is_legal(piece,(y1,y2)):
-                    return (piece,(y1,y2))
                 
-    def random_move2(self,team):
+    def random_move(self,team):
         legal_moves = self.legal_moves()
         if legal_moves:
                 filtered_moves = [move for move in legal_moves if move[0].value in [team, 10*team]]
@@ -108,8 +98,6 @@ class Board:
                     return None
         else:   
             return None
-                
-
 
     def random_game(self,team):
         finished,winning_team = self.is_final()
