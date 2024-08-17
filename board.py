@@ -93,10 +93,23 @@ class Board:
         while True:
             x1,x2 = choice(range(8)),choice(range(8))
             if self.state[x1][x2] in [team,10*team]:
-                piece = self.Piece((i,j),self.state[x1][x2])
+                piece = self.Piece((x1,x2),self.state[x1][x2])
                 y1,y2 = choice([x1+1,x1-1,x1+2,x1-2]),choice([x2+1,x2-1,x2+2,x2-2])
                 if self.is_legal(piece,(y1,y2)):
                     return (piece,(y1,y2))
+                
+    def random_move2(self,team):
+        legal_moves = self.legal_moves()
+        if legal_moves:
+                filtered_moves = [move for move in legal_moves if move[0].value in [team, 10*team]]
+                if filtered_moves:
+                     return choice(filtered_moves)
+                else: 
+                    return None
+        else:   
+            return None
+                
+
 
     def random_game(self,team):
         finished,winning_team = self.is_final()

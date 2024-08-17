@@ -12,9 +12,6 @@ class McNode:
         self.visited=0
         self.value=0
 
-    def is_fully_expanded(self):
-        pass
-
     def select(self):
         node = self
         while node.children != []:
