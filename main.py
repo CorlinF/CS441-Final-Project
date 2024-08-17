@@ -8,11 +8,7 @@ def main():
     board_state = Board.initialize_board()
     board = Board(board_state)
     print_board(board.state)
-    move=board.random_move(1)
-    piece=move[0]
-    position=move[1]
-    board.make_move(piece,position)
-    print_board(board.state)
+    print(board.random_game(1))
 
 if __name__ == "__main__":
     main()
