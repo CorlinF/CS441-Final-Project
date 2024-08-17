@@ -36,17 +36,17 @@ class Board:
         if piece.value ==1:
             if x1-y1==1 and abs(x2-y2)==1:
                 return True
-            if x1-y1==2 and abs(x2-y2)==2 and self.state[x1+1][x2+(y2-x2)/2] < 0: #checks if piece captured, (y2-x2)/2 is 1 in direction moved to horizontally
+            if x1-y1==2 and abs(x2-y2)==2 and self.state[x1+1][x2+(y2-x2)//2] < 0: #checks if piece captured, (y2-x2)/2 is 1 in direction moved to horizontally
                 return True
         if piece.value ==-1:
             if y1-x1==1 and abs(x2-y2)==1:
                 return True
-            if y1-x1==2 and abs(x2-y2)==2 and self.state[x1+1][x2+(y2-x2)/2] > 0:
+            if y1-x1==2 and abs(x2-y2)==2 and self.state[x1+1][x2+(y2-x2)//2] > 0:
                 return True
         if piece.value in [10,-10]:
             if abs(x1-y1)==1 and abs(x2-y2)==1:
                 return True
-            if abs(x1-y1)==2 and abs(x2-y2)==2 and self.state[x1+(y1-x1)/2][x2+(y2-x2)/2]*piece.value < 0: #multiplication checks that piece value and captured value opposite signs, different teams
+            if abs(x1-y1)==2 and abs(x2-y2)==2 and self.state[x1+(y1-x1)//2][x2+(y2-x2)//2]*piece.value < 0: #multiplication checks that piece value and captured value opposite signs, different teams
                 return True
 
         return False
