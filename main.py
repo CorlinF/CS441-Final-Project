@@ -1,5 +1,6 @@
 from board import Board
 from MCTS import MCTS
+import copy
 def print_board(state):
     for row in state:
         print(" ".join(str(x) for x in row))
@@ -8,7 +9,6 @@ def print_board(state):
 def main():
     state = Board.initialize_board()
     board = Board(state)
-    mcts_agent = MCTS(board, -1, 10)
     finished = False
     winner = 0
     while True:
@@ -35,10 +35,10 @@ def main():
             else:
                 print("draw")
             break
-        
+        x=copy.deepcopy(board)
+        mcts_agent=MCTS(x,-1,10)
         best_board = mcts_agent.search()
         board.state = best_board.state
-        print_board(board.state)
         if finished:
             if winner == 1:
                 print("you win")
