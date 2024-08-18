@@ -1,4 +1,4 @@
-from board import Board
+
 from random import choice
 from math import sqrt, log
 import time
@@ -15,7 +15,7 @@ class McNode:
     def select(self):
         node = self
         while node.children != []:
-            node = choice(node.children,weights=[child.value/child.visited+sqrt(log(node.visited)/(2*child.visited)) for child in node.children])
+            node = choice(node.children,weights=[child.value//child.visited+sqrt(log(node.visited)/(2*child.visited)) for child in node.children])
         return node
     
     def rollout(self,num_rollout):
@@ -37,7 +37,10 @@ class McNode:
             self.parent.backpropagate(value)
         
     def expand(self):
-        self.children = [McNode(move,-self.team,self) for move in self.board.legal_moves()]
+        legal_moves = self.board.legal_moves()
+        if not legal_moves:
+            print("No legal moves available.")
+        self.children = [McNode(move, -self.team, self) for move in legal_moves]
 
 
 class MCTS:
@@ -47,7 +50,7 @@ class MCTS:
 
     def search(self,times=10):
         start_time = time.time()
-        while time.time() - start_time < self.time_limit:
+        while time.time() - start_time < self.time:
             current=self.root
             while current.children:
                 current=current.select()
