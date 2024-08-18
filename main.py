@@ -8,7 +8,8 @@ def main():
     board_state = Board.initialize_board()
     board = Board(board_state)
     print_board(board.state)
-    print(board.random_game(1))
+    winner=board.random_game(1)
+    print_board(board.state)
 
 if __name__ == "__main__":
     main()
