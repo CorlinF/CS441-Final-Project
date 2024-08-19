@@ -33,7 +33,7 @@ class McNode:
                 total_value += 1
             elif result == 0:
                 total_value += 0.5
-        self.value = total_value / num_rollout
+        self.value += total_value
         return self.value
     
     def backpropagate(self, value):
