@@ -58,6 +58,10 @@ class Checkers:
             new_state[cr][cc] = 0
         else:
             raise ValueError(f"Invalid move length: {len(move)}")
+        if move[-1][0] == 7 and self.current_player == -1:
+            new_state[move[-1][0]][move[-1][1]] = -2
+        elif move[-1][0] == 0 and self.current_player == 1:
+            new_state[move[-1][0]][move[-1][1]] = 2
         return new_state
 
     def is_terminal(self, state):
@@ -97,8 +101,10 @@ class Checkers:
     def print_board(self, state):
 
         representation = {
-            1: 'W',  # White pieces
-            -1: 'B', # Black pieces
+            1: 'w',  # White pieces
+            2: 'W',  # White kings
+            -1: 'b', # Black pieces
+            -2: 'B', # Black kings
             0: '.'   # Empty squares
         }
         print("  a b c d e f g h")
@@ -266,13 +272,13 @@ def compare_algorithms(checkers_game):
         state = checkers_game.initial_state()
         while not checkers_game.is_terminal(state):
                 move = ql_agent.choose_action(state)
-                print(move)
+                print("QL move: ",move)
                 if move is None:
                     break
                 state = checkers_game.apply_move(state, move)
                 checkers_game.switch_player()
                 move = mcts(state, checkers_game)
-                print(move)
+                print("MCTS move: ", move)
                 if move is None:
                     break
                 state = checkers_game.apply_move(state, move)
