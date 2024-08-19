@@ -44,7 +44,8 @@ class McNode:
         
     def expand(self):
         legal_moves = self.board.legal_moves()
-        for move in legal_moves:
+        filtered_moves = [move for move in legal_moves if move[0].value in [-1, -10]]
+        for move in filtered_moves:
             new_board = Board([row[:] for row in self.board.state])  
             piece, position = move
             new_board.make_move(piece, position)
